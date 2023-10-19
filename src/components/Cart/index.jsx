@@ -1,5 +1,6 @@
 import CartItem from "../CartItem";
 import './style.css';
+import { useState } from "react";
 
 const products = [
   {
@@ -25,15 +26,28 @@ const products = [
 ];
 
 const Cart = () => {
+  const [cartProducts, setCartProducts] = useState(products)
+
+  // musime vedet, u ktereho produktu nastavujeme stav
+  const handleAmountChange = (index, newCount) => {
+    const newProducts = [...cartProducts]; // stejne jako aktualni stav
+    newProducts[index].amount = newCount;
+    setCartProducts(newProducts);
+  };
+
+  const totalAmount = () => {
+    return cartProducts.reduce((sum, item) => sum + item.amount, 0);
+  }
+
   return (
     <div className="cart">
       <div className="cart__head">
         <h2>Košík</h2>
-        <span>Položek: 1</span>
+        <span>Položek: {totalAmount()}</span>
       </div>
       <div className="cart__items">
-        {products.map((product) => (
-          <CartItem product={product} />
+        {products.map((product, idx) => (
+          <CartItem key={product.name} product={product} onAmountChange={(amount) => handleAmountChange(idx, amount)} />
         ))}
       </div>
     </div>

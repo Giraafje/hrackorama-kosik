@@ -1,24 +1,24 @@
 import { useState } from "react";
 import './style.css';
 
-const Amount = ({ value }) => {
-  const [count, setCount] = useState(value);
+const Amount = ({ value, onChange }) => {
+  //const [count, setCount] = useState(value);
 
-  const handelIncrement = () => {
-    setCount(count + 1);
+  const handleIncrement = () => {
+    onChange(value + 1);
   }
 
-  const handelDecrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
+  const handleDecrement = () => {
+    if (value > 0) {
+      onChange(value - 1);
     }
   }
 
   return (
     <div className="amount">
-      <button className="amount__btn" onClick={handelDecrement}>–</button>
-      <div className="amount__count">{count}</div>
-      <button className="amount__btn" onClick={handelIncrement}>+</button>
+      <button className="amount__btn" onClick={handleDecrement}>–</button>
+      <div className="amount__count">{value}</div>
+      <button className="amount__btn" onClick={handleIncrement}>+</button>
     </div>
   );
 };
